@@ -4,17 +4,14 @@ import { Button } from "@/components/ui/button";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
-import useStore from "../store/useStore";
 
 const SeatSelection = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [selectedSeats, setSelectedSeats] = useState([]);
-  const setStoreSelectedSeats = useStore((state) => state.setSelectedSeats);
+  const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
 
-  const handleSeatSelect = (seats) => {
+  const handleSeatSelect = (seats: string[]) => {
     setSelectedSeats(seats);
-    setStoreSelectedSeats(seats);
   };
 
   const handleProceed = () => {
