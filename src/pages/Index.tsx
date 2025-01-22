@@ -1,5 +1,6 @@
 import { Layout } from "@/components/Layout";
 import { MovieCard } from "@/components/MovieCard";
+import { Button } from "@/components/ui/button";
 
 // Mock data - replace with API calls later
 const movies = [
@@ -33,15 +34,84 @@ const movies = [
   },
 ];
 
+const comingSoon = [
+  {
+    id: "5",
+    title: "Dune: Part Two",
+    imageUrl: "https://image.tmdb.org/t/p/w500/8b8R8l88Qje9dn9OE8PY05Nxl1X.jpg",
+    rating: 4.5,
+    genre: "Sci-Fi",
+  },
+  {
+    id: "6",
+    title: "Deadpool 3",
+    imageUrl: "https://image.tmdb.org/t/p/w500/4JeejGugONWpJkbnvL12hVoYEDa.jpg",
+    rating: 4.6,
+    genre: "Action",
+  },
+];
+
 const Index = () => {
   return (
     <Layout>
-      <section className="mb-12">
-        <h1 className="text-4xl font-bold mb-8">Now Showing</h1>
+      {/* Hero Section */}
+      <section className="relative h-[60vh] mb-16 rounded-lg overflow-hidden">
+        <img
+          src="https://image.tmdb.org/t/p/original/8b8R8l88Qje9dn9OE8PY05Nxl1X.jpg"
+          alt="Featured Movie"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent">
+          <div className="absolute bottom-0 left-0 p-8 space-y-4">
+            <h1 className="text-5xl font-bold">Dune: Part Two</h1>
+            <p className="text-xl text-gray-200 max-w-2xl">
+              Continue the journey beyond fear in the next chapter of Denis Villeneuve's epic saga.
+            </p>
+            <Button className="bg-cinema-red hover:bg-red-700">Book Now</Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Now Showing */}
+      <section className="mb-16">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-3xl font-bold">Now Showing</h2>
+          <Button variant="outline">View All</Button>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {movies.map((movie) => (
             <MovieCard key={movie.id} {...movie} />
           ))}
+        </div>
+      </section>
+
+      {/* Coming Soon */}
+      <section className="mb-16">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-3xl font-bold">Coming Soon</h2>
+          <Button variant="outline">View All</Button>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {comingSoon.map((movie) => (
+            <MovieCard key={movie.id} {...movie} />
+          ))}
+        </div>
+      </section>
+
+      {/* Promotions */}
+      <section className="mb-16">
+        <h2 className="text-3xl font-bold mb-8">Special Offers</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-cinema-gray rounded-lg p-6 space-y-4">
+            <h3 className="text-2xl font-semibold">Student Discount</h3>
+            <p className="text-gray-400">Get 20% off on all movie tickets with your student ID</p>
+            <Button variant="outline">Learn More</Button>
+          </div>
+          <div className="bg-cinema-gray rounded-lg p-6 space-y-4">
+            <h3 className="text-2xl font-semibold">Family Package</h3>
+            <p className="text-gray-400">Special rates for family bookings of 4 or more</p>
+            <Button variant="outline">Learn More</Button>
+          </div>
         </div>
       </section>
     </Layout>

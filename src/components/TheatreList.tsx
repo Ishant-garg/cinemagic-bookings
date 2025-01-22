@@ -1,6 +1,7 @@
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { Card } from "./ui/card";
+import { useNavigate } from "react-router-dom";
 
 interface Theatre {
   id: string;
@@ -26,12 +27,19 @@ const theatres: Theatre[] = [
 ];
 
 interface TheatreListProps {
-  onSelectShowtime: (theatreId: string, showtime: string) => void;
+  movieId: string;
 }
 
-export const TheatreList = ({ onSelectShowtime }: TheatreListProps) => {
+export const TheatreList = ({ movieId }: TheatreListProps) => {
+  const navigate = useNavigate();
   const [selectedTheatre, setSelectedTheatre] = useState<string | null>(null);
   const [selectedShowtime, setSelectedShowtime] = useState<string | null>(null);
+
+  const handleShowtimeSelect = (theatreId: string, showtime: string) => {
+    setSelectedTheatre(theatreId);
+    setSelectedShowtime(showtime);
+    navigate(`/movie/${movieId}/booking`);
+  };
 
   return (
     <div className="space-y-4">
@@ -58,11 +66,7 @@ export const TheatreList = ({ onSelectShowtime }: TheatreListProps) => {
                         ? "bg-cinema-red hover:bg-red-700"
                         : "hover:bg-cinema-red/10"
                     }
-                    onClick={() => {
-                      setSelectedTheatre(theatre.id);
-                      setSelectedShowtime(time);
-                      onSelectShowtime(theatre.id, time);
-                    }}
+                    onClick={() => handleShowtimeSelect(theatre.id, time)}
                   >
                     {time}
                   </Button>

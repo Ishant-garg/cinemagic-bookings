@@ -2,7 +2,6 @@ import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { useParams } from "react-router-dom";
 import { TheatreList } from "@/components/TheatreList";
-import { SeatMap } from "@/components/SeatMap";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -22,31 +21,6 @@ const movieDetails = {
 
 const MovieDetails = () => {
   const { id } = useParams();
-  const [selectedTheatre, setSelectedTheatre] = useState<string | null>(null);
-  const [selectedShowtime, setSelectedShowtime] = useState<string | null>(null);
-  const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
-
-  const handleShowtimeSelect = (theatreId: string, showtime: string) => {
-    setSelectedTheatre(theatreId);
-    setSelectedShowtime(showtime);
-    setSelectedSeats([]);
-  };
-
-  const handleSeatSelect = (seats: string[]) => {
-    setSelectedSeats(seats);
-  };
-
-  const handleBooking = () => {
-    if (!selectedSeats.length) {
-      toast.error("Please select at least one seat");
-      return;
-    }
-    toast.success(
-      `Booking confirmed for ${selectedSeats.length} seat(s): ${selectedSeats.join(
-        ", "
-      )}`
-    );
-  };
 
   return (
     <Layout>
@@ -80,23 +54,7 @@ const MovieDetails = () => {
           </div>
         </div>
 
-        <TheatreList onSelectShowtime={handleShowtimeSelect} />
-
-        {selectedTheatre && selectedShowtime && (
-          <>
-            <SeatMap onSelectSeats={handleSeatSelect} />
-            <div className="flex justify-center">
-              <Button
-                size="lg"
-                className="bg-cinema-red hover:bg-red-700 text-white px-8"
-                onClick={handleBooking}
-                disabled={selectedSeats.length === 0}
-              >
-                Book {selectedSeats.length} Seat(s) for {selectedShowtime}
-              </Button>
-            </div>
-          </>
-        )}
+        <TheatreList movieId={id || "1"} />
       </div>
     </Layout>
   );
