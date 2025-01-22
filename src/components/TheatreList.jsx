@@ -2,16 +2,9 @@ import { Button } from "./ui/button";
 import { useState } from "react";
 import { Card } from "./ui/card";
 import { useNavigate } from "react-router-dom";
+import useStore from "../store/useStore";
 
-interface Theatre {
-  id: string;
-  name: string;
-  location: string;
-  showTimes: string[];
-}
-
-// Mock data - replace with API call later
-const theatres: Theatre[] = [
+const theatres = [
   {
     id: "1",
     name: "Cinema City",
@@ -26,18 +19,22 @@ const theatres: Theatre[] = [
   },
 ];
 
-interface TheatreListProps {
-  movieId: string;
-}
-
-export const TheatreList = ({ movieId }: TheatreListProps) => {
+const TheatreList = ({ movieId }) => {
   const navigate = useNavigate();
-  const [selectedTheatre, setSelectedTheatre] = useState<string | null>(null);
-  const [selectedShowtime, setSelectedShowtime] = useState<string | null>(null);
+  const [selectedTheatre, setSelectedTheatre] = useState(null);
+  const [selectedShowtime, setSelectedShowtime] = useState(null);
+  
+  const setStoreTheatre = useStore((state) => state.setSelectedTheatre);
+  const setStoreShowtime = useStore((state) => state.setSelectedShowtime);
 
-  const handleShowtimeSelect = (theatreId: string, showtime: string) => {
+  const handleShowtimeSelect = (theatreId, showtime) => {
     setSelectedTheatre(theatreId);
     setSelectedShowtime(showtime);
+    
+    const theatre = theatres.find(t => t.id === theatreId);
+    setStoreTheatre(theatre);
+    setStoreShowtime(showtime);
+    
     navigate(`/movie/${movieId}/booking`);
   };
 
@@ -79,3 +76,5 @@ export const TheatreList = ({ movieId }: TheatreListProps) => {
     </div>
   );
 };
+
+export default TheatreList;

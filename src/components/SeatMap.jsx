@@ -1,12 +1,8 @@
 import { Button } from "./ui/button";
 import { useState } from "react";
 
-interface SeatMapProps {
-  onSelectSeats: (seats: string[]) => void;
-}
-
-export const SeatMap = ({ onSelectSeats }: SeatMapProps) => {
-  const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+export const SeatMap = ({ onSelectSeats }) => {
+  const [selectedSeats, setSelectedSeats] = useState([]);
 
   const rows = ["A", "B", "C", "D", "E", "F", "G"];
   const seatsPerRow = 8;
@@ -14,7 +10,7 @@ export const SeatMap = ({ onSelectSeats }: SeatMapProps) => {
   // Mock data - replace with API call later
   const bookedSeats = ["A1", "B4", "C3", "E5"];
 
-  const handleSeatClick = (seatId: string) => {
+  const handleSeatClick = (seatId) => {
     if (bookedSeats.includes(seatId)) return;
 
     setSelectedSeats((prev) => {
@@ -26,7 +22,7 @@ export const SeatMap = ({ onSelectSeats }: SeatMapProps) => {
     });
   };
 
-  const getSeatStatus = (seatId: string) => {
+  const getSeatStatus = (seatId) => {
     if (bookedSeats.includes(seatId)) return "booked";
     if (selectedSeats.includes(seatId)) return "selected";
     return "available";
