@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { UserCircle } from "lucide-react";
 
-export const Layout = ({ children }: { children: React.ReactNode }) => {
+export const Layout = ({ children }) => {
   const navigate = useNavigate();
   const isAdmin = false; // TODO: Implement admin check
 
